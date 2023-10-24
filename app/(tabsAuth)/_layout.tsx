@@ -1,10 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, useColorScheme , Text} from 'react-native';
-import { Header } from '../components/header/Header';
+import { Header } from '../components/Authorization/headerAuth';
 import Colors from '../../constants/Colors';
-import TabBarAccount from '../assets/svg/TabBarAccount'
-import TabBarClinics from '../assets/svg/TabBarClinics'
+import TabBarHistory from '../assets/svg/TabBarHistory'
+import TabBarSearch from '../assets/svg/TabBarSearch'
+import TabBarAnalysis from '../assets/svg/TabBarAnalysis'
+
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -24,34 +26,33 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
       }}>
       <Tabs.Screen
-        name="index"
+        name="analysisTab"
         
         options={{
-          title: 'Главная',
+          title: 'Анализы',
           header: () => <Header />,
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarAnalysis  color={color} />,
         }}
       />
       
       <Tabs.Screen
-        name="clinicsTab"
+        name="searchTab"
         options={{
-          title: 'Клиники',
+          title: 'Найти',
           header: () => <Header />,
-          tabBarIcon: ({ color }) => <TabBarClinics color={color} />,
-        }}
-      />
-       <Tabs.Screen
-        name="cabinetTab"
-        options={{
-          title: 'Войти',
-          header: () => <Header />,
-          tabBarIcon: ({ color }) => <TabBarAccount color={color} />,
+          tabBarIcon: ({ color }) => <TabBarHistory color={color} />,
 
         }}
-        
       />
-    
+      <Tabs.Screen
+        name="historyTab"
+        options={{
+          title: 'История',
+          header: () => <Header />,
+          tabBarIcon: ({ color }) => <TabBarSearch color={color} />,
+        }}
+      />
+      
       
 
     </Tabs>

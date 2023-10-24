@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native';
 
 
 import { Text, View } from '../../constants/Themed';
-import { ListCities } from '../components/clinics/ListCities';
-export default function Clinics() {
+import { Main } from '../components/Authorization/search/mainAuth';
+export default function SearchTab() {
   return (
     <View style={styles.container}>
-        <ListCities />
+        <Main />
     </View>
   );
 }

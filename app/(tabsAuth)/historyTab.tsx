@@ -4,7 +4,7 @@ import { Header } from '../components/header/Header';
 import { Text, View } from '../../constants/Themed';
 import { Main } from '../components/home/Main';
 
-export default function Home() {
+export default function HistoryTab() {
   return (
     <ScrollView contentContainerStyle={{justifyContent:'center', alignItems: 'center', flex: 1}}> 
       <View style={styles.container}>

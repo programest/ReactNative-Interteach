@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 
 import { Text, View } from '../../constants/Themed';
 import { Cabinet } from '../components/sign-in/Cabinet';
-export default function CabinetTab() {
+export default function AnalysisTab() {
   return (
 
       <View style={styles.container}>
