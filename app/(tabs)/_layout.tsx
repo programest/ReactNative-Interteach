@@ -5,6 +5,7 @@ import { Header } from '../components/header/Header';
 import Colors from '../../constants/Colors';
 import TabBarAccount from '../assets/svg/TabBarAccount'
 import TabBarClinics from '../assets/svg/TabBarClinics'
+
 /**
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
@@ -51,6 +52,7 @@ export default function TabLayout() {
         }}
         
       />
+   
     
       
 

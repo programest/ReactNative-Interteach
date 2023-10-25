@@ -38,7 +38,8 @@ const SearchComponent = ({ data } : any) => {
   ];
   
   const handleListItemPress = (item) => {
-    console.log(item)
+    setVisible(false)
+    setSearchQuery(item)
     setPlaceholderText(item);
     setIsFocused(false);
   };
@@ -51,7 +52,6 @@ const SearchComponent = ({ data } : any) => {
             style={styles.textInput}
             onChangeText={handleSearch}
             onFocus={() => setVisible(true)}
-            onBlur={() => setVisible(false)}
         />
         <View style={{alignItems: 'center', flexDirection: 'row'}}>
         <Location />
@@ -77,13 +77,13 @@ const SearchComponent = ({ data } : any) => {
         style={{height: 250}}
         renderItem={({ item }) => 
 
-            <TouchableOpacity style={[styles.filterList]}   onFocus={() => { setIsFocused(true)}}  onPress={() => handleListItemPress(item)}  onBlur={() => { setIsFocused(false)}} >
-                <View style={styles.filterItem} >
+            <TouchableOpacity style={[styles.filterList]}   onFocus={() => { setIsFocused(true)}} onPress={() => handleListItemPress(item)}  onBlur={() => { setIsFocused(false)}} >
+               
                     <Text style={{}}>{item}</Text>
                     <View style={{marginRight: 5}}>
                         <Arrow width="20" height="15"></Arrow>
                     </View>
-                </View>
+               
             </TouchableOpacity>
         }
         />
@@ -108,13 +108,14 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         marginTop: 20,
         width: '100%',
-        height: 22
-    },
-    filterItem: {
+        height: 22,
+        backgroundColor: 'red',
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between'
+
     },
+    
     focusedFilterList: {
         backgroundColor: 'blue', // Измените цвет при фокусе
       },

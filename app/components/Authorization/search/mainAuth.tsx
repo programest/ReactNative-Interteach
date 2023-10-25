@@ -23,9 +23,9 @@ export function Main() {
         <View style={styles.mainBtns}>
            
 
-              <TouchableOpacity style={styles.mainPlayer} onPress={() => router.push('/components/home/Player')}>
+              <TouchableOpacity style={styles.mainPlayer} onPress={() => router.push('/components/Authorization/search/doctor/doctorPageAuth')}>
              
-                <Text style={styles.buttonText}>Видео о нас</Text>
+                <Text style={styles.buttonText}>Врач</Text>
                 
               </TouchableOpacity>
         
