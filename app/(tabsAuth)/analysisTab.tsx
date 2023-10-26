@@ -7,7 +7,9 @@ export default function AnalysisTab() {
   return (
 
       <View style={styles.container}>
+        <ScrollView contentContainerStyle={{justifyContent:'center', alignItems: 'center', flex: 1}}>
           <Cabinet />
+          </ScrollView>
       </View>
    
   );

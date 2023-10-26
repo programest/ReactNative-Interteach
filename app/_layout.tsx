@@ -48,7 +48,7 @@ export default function RootLayout() {
   }
 
   return (
-    <Provider store={store}> 
+    <Provider store={store} > 
       <RootLayoutNav />
     </Provider>
     )
@@ -77,17 +77,21 @@ function RootLayoutNav() {
         console.error('Error accessing AsyncStorage:', error);
       });
   }, []);
-  console.log(userAuth)
+  
   return (
       <>
         {showWelcomeScreen ? (
           <Enjoy />
         ) : (
+          <>
           <ThemeProvider  value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <Stack>
-              {userAuth ? <Stack.Screen name="(tabsAuth)" options={{ headerShown: false }} /> : <Stack.Screen name="(tabs)" options={{ headerShown: false }} />}
-            </Stack>
-          </ThemeProvider>
+                  <Stack >
+                    {userAuth ?    <Stack.Screen name="(tabsAuth)" options={{ headerShown: false }} /> :    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />}
+                 
+
+                   </Stack>
+              </ThemeProvider>
+           </>
         )}
       </>
    

@@ -4,7 +4,10 @@ import { Text, View } from '../../../../../constants/Themed';
 import { Link,useRouter,router, Stack  } from 'expo-router';
 import DoctorSelectDay from './SelectDay';
 import DoctorSelectHour from './SelectHour';
+import Message from '../../../hooks/Message';
 import DoctorSelectPolic from './SelectPolic';
+import { useDispatch, useSelector } from 'react-redux'
+
 export default function DoctorPageAuth() {
   const data = {
     name: "Иванов Иван Иванович",
@@ -13,7 +16,7 @@ export default function DoctorPageAuth() {
       {
         day: "пн",
         day_number: 20,
-        hours: ["9:40", "10:30", "07:40", "8:30"]
+        hours: ["9:40", "10:30", "07:40", "8:30","12:40", "13:30", "11:40", "12:00" ]
       },
       {
         day: "вт",
@@ -31,23 +34,30 @@ export default function DoctorPageAuth() {
         hours: ["11:40", "12:00"]
       },
       {
-        day: "чт",
-        day_number: 23,
+        day: "пт",
+        day_number: 24,
         hours: ["11:40", "12:00"]
       }
     ],
     address: "ул. Первая, 123"
   };
-
+  const dispatch = useDispatch()
   const [day, setDay] = useState('')
   const [time, setTime] = useState('')
   const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState('')
 
- 
+  const PressInDoctor = () => {
+    dispatch({ type: 'ADD_MESSAGE', payload: {type: 'error' ,text: 'Заполните все поля' }})
+
+  }
   return (
     
-<ScrollView >
+
+
     <View style={styles.doctor}>
+      
+    <ScrollView style={{flex: 1}} >
        <Stack.Screen options={{ title: 'Врач' }} />
         
            
@@ -62,19 +72,19 @@ export default function DoctorPageAuth() {
               ) : <></>}
                 <DoctorSelectPolic isOpen={isOpen} setIsOpen={setIsOpen} data={data} />
               <View>
-                <TouchableOpacity style={styles.doctorBtn}>
+                <TouchableOpacity style={styles.doctorBtn} onPress={() => PressInDoctor()}>
                     <Text style={styles.doctorBtnText}>Записаться</Text>
                 </TouchableOpacity>
             </View>
             
-
             </View>
             
           
+            </ScrollView>
+            <Message />
 
     </View>
 
-    </ScrollView>
 
   );
 }
@@ -90,7 +100,7 @@ const styles = StyleSheet.create({
    
     },
     doctorBtn: {
-      backgroundColor: '#0957df',
+      backgroundColor: '#08367B',
       width: '95%',
       alignItems: 'center',
       justifyContent: 'center',
@@ -104,7 +114,7 @@ const styles = StyleSheet.create({
     },
     active: {
       color: '#fff',
-      backgroundColor: '#0957df'
+      backgroundColor: '#08367B'
     },
     titleSection:{
       fontSize: 17,
@@ -114,12 +124,14 @@ const styles = StyleSheet.create({
     },
     
     name: {
+      textAlign: 'center',
       fontSize: 25, 
       fontWeight: '700',
       marginTop: 20,
       marginBottom: 10
     },
     specialty: {
+      textAlign: 'center',
       marginBottom: 30,
       fontSize: 18, 
       color: '#969696',

@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   activeHour: {
-    backgroundColor: '#0957df',
-    borderColor: '#0957df',
+    backgroundColor: '#08367B',
+    borderColor: '#08367B',
     color: '#fff',
   },
   hours: {

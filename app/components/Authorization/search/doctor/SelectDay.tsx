@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
       },
       active: {
         color: '#fff',
-        backgroundColor: '#0957df'
+        backgroundColor: '#08367B'
       },dayNumber: {
         fontSize: 25,
       },day: {

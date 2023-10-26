@@ -21,7 +21,7 @@ const Radio: React.FC<RadioProps> = ({ options, selectedOption, onSelect }) => {
             option === selectedOption ? styles.selectedOption : null,
           ]}
         >
-          <Text style={styles.optionText}>{option}</Text>
+          <Text style={[styles.optionText, option === selectedOption ? styles.selectedOption : null]}>{option}</Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   selectedOption: {
-    backgroundColor: '#eaeff1',
+    color: '#FFFFFF',
+    backgroundColor: '#08367B',
   },
   optionText: {
     color: 'black',

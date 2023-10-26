@@ -1,5 +1,5 @@
 import React , { useState, useEffect}from 'react';
-import {  TouchableOpacity, StyleSheet, Image, SafeAreaView } from 'react-native';
+import {  TouchableOpacity, StyleSheet, Image, SafeAreaView , TouchableWithoutFeedback} from 'react-native';
 import { Text, View } from '../../../../constants/Themed';
 import { Link,useRouter,router  } from 'expo-router';
 import SearchComponent from '../SearchAuth';
@@ -7,15 +7,16 @@ import SearchComponent from '../SearchAuth';
 export function Main() {
       const router = useRouter();
       const data = ['Apple', 'Banana', 'Cherry', 'Date', 'Grapes', 'Lemon', 'Apple', 'Banana', 'Cherry', 'Date', 'Grapes', 'Lemon'];
-
+      const [visible, setVisible] = useState(false)
+      const [loading, setLoading] = useState(true)
   return (
     <>
    
-    
+ 
     <View style={styles.main}>
       <View style={styles.mainContent}>
    
-          <SearchComponent data={data} />
+          <SearchComponent data={data} visible={visible} setVisible={setVisible} loading={loading} />
       
         <Text style={styles.mainTitle}>asdдного  уровня</Text>
     
@@ -36,7 +37,7 @@ export function Main() {
         
       </View>
     </View>
-    
+
     </>
   );
 }

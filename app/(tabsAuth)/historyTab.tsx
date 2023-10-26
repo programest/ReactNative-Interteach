@@ -8,8 +8,7 @@ export default function HistoryTab() {
   return (
     <ScrollView contentContainerStyle={{justifyContent:'center', alignItems: 'center', flex: 1}}> 
       <View style={styles.container}>
-
-          <Main/>
+        <Text>sdfdfs</Text>
       </View>
     </ScrollView>
   );
