@@ -6,9 +6,25 @@ import SearchComponent from '../SearchAuth';
 
 export function Main() {
       const router = useRouter();
-      const data = ['Apple', 'Banana', 'Cherry', 'Date', 'Grapes', 'Lemon', 'Apple', 'Banana', 'Cherry', 'Date', 'Grapes', 'Lemon'];
       const [visible, setVisible] = useState(false)
       const [loading, setLoading] = useState(true)
+      const [error, setError] = useState(false)
+      const [specialty, setSpecialty] = useState([])
+      const fetchPosts = () => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then((response) => response.json())
+        .then((json) => {
+         
+          setSpecialty(json); 
+        })
+        .catch((error) => setError(error))
+        .finally(() => setLoading(false))
+    }
+      useEffect(() => {
+          fetchPosts()
+      }, [])
+
+
   return (
     <>
    
@@ -16,7 +32,7 @@ export function Main() {
     <View style={styles.main}>
       <View style={styles.mainContent}>
    
-          <SearchComponent data={data} visible={visible} setVisible={setVisible} loading={loading} />
+          <SearchComponent data={specialty} visible={visible} setVisible={setVisible} loading={loading} />
       
         <Text style={styles.mainTitle}>asdдного  уровня</Text>
     
@@ -58,6 +74,7 @@ const styles = StyleSheet.create({
 
   },
   mainImg: {
+    zIndex: 1,
     marginBottom: 40
   },
 

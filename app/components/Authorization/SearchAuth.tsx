@@ -4,27 +4,24 @@ import { Picker } from '@react-native-picker/picker';
 import Location from '../../assets/svg/Location'
 import Arrow from '../../assets/svg/Arrow';
 import InputArrow from '../../assets/svg/InputArrow';
-const SearchComponent = ({ data, visible, setVisible, loading } : any) => {
+import NoResultSearch from '../../components/Authorization/search/noResultSearch'
+interface SearchComponentProps {
+    data: any[];
+    visible: boolean;
+    setVisible: (visible: boolean) => void;
+    loading: boolean;
+  }
+  type Option = {
+    label: string;
+    value: string;
+  };
+const SearchComponent: React.FC<SearchComponentProps> =  ({ data, visible, setVisible, loading } : any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedValue, setSelectedValue] = useState('Алматы');
   const [isFocused, setIsFocused] = useState(false);
   const [placeholderText, setPlaceholderText] = useState('Найдите вашего врача');
 
-  const [filteredData, setFilteredData] = useState(data);
-
-  const handleSearch = (query) => {
-    setSearchQuery(query);
-    const filtered = data.filter((item) =>
-      item.toLowerCase().includes(query.toLowerCase())
-    );
-    const sad = 'Ничего не нашлось'
-    {filtered.length > 0 ? setFilteredData(filtered) : setFilteredData(sad)}
-
-  };
-  type Option = {
-    label: string;
-    value: string;
-  };
+  const rotationValue = useRef(new Animated.Value(0)).current;
   const [isOpen, setIsOpen] = useState(false)
   const options: Option[] = [
     { value: "Option 1", label: "Алматы" },
@@ -38,6 +35,35 @@ const SearchComponent = ({ data, visible, setVisible, loading } : any) => {
     { value: "Option 9", label: "Уральск" },
     { value: "Option 10", label: "Кульсары" },
   ];
+  const [filteredData, setFilteredData] = useState<string[]>([]);
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      setFilteredData(data.map((item) => item.name));
+    } else {
+      setFilteredData([]);
+    }
+  }, [data]);
+  type Option = {
+    label: string;
+    value: string;
+  };
+
+
+  const handleSearch = (query : string) => {
+    setSearchQuery(query);
+
+    if (Array.isArray(data)) {
+      const filtered = data.filter((item) => {
+       
+          return item.name.toLowerCase().includes(query.toLowerCase());
+       
+      });
+
+      setFilteredData(filtered.map((item) => item.name));
+    }
+};
+
+  
   const toggleRotation = () => {
     const toValue = isOpen ? 0 : 1;
    
@@ -62,14 +88,14 @@ const SearchComponent = ({ data, visible, setVisible, loading } : any) => {
     toggleRotation()
     
   }
- 
+
   useEffect(() => {
     {loading ?  setPlaceholderText('Загрука...') : setPlaceholderText(placeholderText)}
 
   }, [loading])
-  const rotationValue = useRef(new Animated.Value(0)).current;
+
   return (
-    <View style={{marginBottom: 20}}>
+    <View style={{marginBottom: 20, zIndex: 100, position: 'relative',}}>
         
                 <View  style={styles.textInputSearch}>
                     
@@ -123,46 +149,58 @@ const SearchComponent = ({ data, visible, setVisible, loading } : any) => {
                     </View >
                     
                 </View>
-              
                 {visible ? (
                         <View style={styles.container}>
                             {loading && (
-                            <View style={styles.loadingContainer}>
-                                <ActivityIndicator size='large' color="#08367B" />
-                            </View>
-                            )}
-                            <FlatList
-                            data={filteredData}
-                            keyExtractor={(item, index) => index.toString()}
-                            style={styles.flatList}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                style={styles.filterList}
-                                onFocus={() => setIsFocused(true)}
-                                onPress={() => handleListItemPress(item)}
-                                onBlur={() => setIsFocused(false)}
-                                >
-                                <Text>{item}</Text>
-                                <View style={{ marginRight: 5 }}>
-                                    <Arrow width="20" height="15"></Arrow>
+                                <View style={styles.loadingContainer}>
+                                    <ActivityIndicator size='large' color="#08367B" />
                                 </View>
-                                </TouchableOpacity>
                             )}
-                            />
+                             
+                                {filteredData.length > 0 ? (
+                                    <FlatList
+                                        data={filteredData}
+                                        keyExtractor={(item, index) => index.toString()}
+                                        style={styles.flatList}
+                                        renderItem={({ item }) => (
+                                            <TouchableOpacity
+                                            style={styles.filterList}
+                                            onFocus={() => setIsFocused(true)}
+                                            onPress={() => handleListItemPress(item)}
+                                            onBlur={() => setIsFocused(false)}
+                                            >
+                                            <Text>{item}</Text>
+                                            <View style={{ marginRight: 5 }}>
+                                                <Arrow width="20" height="15"></Arrow>
+                                            </View>
+                                            </TouchableOpacity>
+                                        )}
+                                    />
+                                ) : (
+                                   
+                                    <NoResultSearch result={searchQuery} />
+                                    
+                                )}
+                               
+                          
                         </View>
-                        ) : null}
-
+                ) : null}
                 
-            
     </View>
   );
 };
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: '#E8E8E8',
+      
+       justifyContent: 'center',
+
         flex: 1,
-        justifyContent: 'center',
+        marginTop: 20,
         alignItems: 'center',
-        position: 'relative',
+        position: 'absolute',
+        width: '100%',
+        top: 40
       },
       loadingContainer: {
         position: 'absolute',
@@ -173,15 +211,17 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.3)',
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 999, // Вы можете настроить значение zIndex, чтобы управлять слоем загрузки
+        zIndex: 999, 
       },
       flatList: {
         position: 'absolute',
-        top: 20,
+        top: 0,
+        left: 0,
         padding: 10,
+        width: '100%',
         backgroundColor: '#E8E8E8',
         borderRadius: 10,
-        zIndex: 100,
+        zIndex: 1000,
       },
     textInputSearch: {
         padding: 8,
@@ -209,7 +249,7 @@ const styles = StyleSheet.create({
     },
     
     focusedFilterList: {
-        backgroundColor: 'blue', // Измените цвет при фокусе
+        backgroundColor: 'blue', 
       },
     textInput: {
       
